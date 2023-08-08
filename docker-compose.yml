@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  postgres:
+    build: .
+    image: postgres:14
+    container_name: postgres_repl
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=repl_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c wal_level=logical
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+volumes:
+  postgres_data:
